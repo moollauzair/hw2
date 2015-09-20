@@ -90,7 +90,7 @@ get_word( char *buf, FILE *infile) {
 void
 *insertwords(void *arg){
   targ_t *targ = (targ_t *) arg;
-  long currtid = targ->tid;   
+  //long currtid = targ->tid;   
   so_t *so = targ->soptr;
   char *wbuf = targ->wordbuf;
   int nt = 0;
@@ -103,7 +103,7 @@ void
     }else{  
       pthread_mutex_unlock(&so->lockfile);
       printf("%i\n",nt);
-      return;
+      return NULL;
     }
   
   }
@@ -115,7 +115,7 @@ main( int argc, char *argv[] ){
   pthread_t insert[numthreads];
   so_t *share = malloc( sizeof(so_t) );
   FILE *infile = stdin;
-  int check;
+  // int check;
   targ_t insar[numthreads];
   char buffer[MAXWORD];
   
@@ -159,7 +159,7 @@ main( int argc, char *argv[] ){
     perror("Failed to destroy mutex" );
     exit(EXIT_FAILURE);
   }  
-
-  free(share);
   
+  free(share);
+  pthread_exit(NULL);
 }
